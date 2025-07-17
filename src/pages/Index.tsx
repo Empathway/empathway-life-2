@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import Assessment from './Assessment';
 
-const Index = () => {
+const Index: React.FC = () => {
+  const [showQuiz, setShowQuiz] = useState(false);
   return (
     <div className="font-manrope antialiased text-white bg-gradient-to-b from-gray-900 via-gray-950 to-black min-h-screen flex flex-col">
       {/* Header / Navbar */}
@@ -65,6 +67,26 @@ const Index = () => {
           ))}
         </div>
       </section>
+
+      {/* Quiz Section */}
+    <section className="py-20 bg-gradient-to-b from-gray-950 to-black">
+      <div className="container mx-auto px-8 text-center mb-16">
+        <h2 className="text-3xl font-extrabold mb-6 text-white">Take Our Free Quiz</h2>
+        <p className="text-lg text-muted-foreground">Discover your mental health needs</p>
+      </div>
+      <div className="container mx-auto flex justify-center">
+        {!showQuiz ? (
+          <Button
+            onClick={() => setShowQuiz(true)}
+            className="bg-gradient-to-r from-primary to-purple-600 text-white px-8 py-3 rounded-xl shadow-xl text-lg font-bold hover:scale-105 transition"
+          >
+            Start Quiz
+          </Button>
+        ) : (
+          <Assessment />
+        )}
+      </div>
+    </section>
 
       {/* Testimonials */}
       <section className="py-20 bg-gradient-to-b from-gray-950 to-black">
