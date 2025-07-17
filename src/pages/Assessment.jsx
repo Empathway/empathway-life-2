@@ -7,6 +7,8 @@ const Assessment = () => {
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [email, setEmail] = useState('');
+  const [sent, setSent] = useState(false);
 
   const questions = [
     {
@@ -49,6 +51,13 @@ const Assessment = () => {
     setAnswers({});
     setShowResults(false);
     setProgress(0);
+    setEmail('');
+    setSent(false);
+  };
+
+  const handleSubmitEmail = () => {
+    // TODO: integrate real email sending logic here
+    setSent(true);
   };
 
   return (
@@ -57,7 +66,7 @@ const Assessment = () => {
 
       <div className="progress-bar bg-gray-700 rounded-full h-2 mb-8">
         <div
-          className="progress-fill bg-primary h-2 rounded-full transition-width duration-300"
+          className="progress-fill bg-primary h-2 rounded-full transition-all duration-300"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -71,9 +80,9 @@ const Assessment = () => {
             {questions[currentQuestion].options.map((opt, i) => (
               <ScaleButton
                 key={i}
+                value={i}
                 onClick={() => handleAnswer(i)}
                 isSelected={answers[currentQuestion] === i}
-                value={i}
               >
                 {opt}
               </ScaleButton>
@@ -90,19 +99,54 @@ const Assessment = () => {
               ? "You're showing great resilience! Consider exploring our mindfulness resources."
               : "Your responses suggest you might benefit from additional support. Remember, help is available."}
           </p>
-          <div className="flex justify-center gap-4">
+
+          {!sent ? (
+            <div className="email-form flex flex-col items-center gap-4">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                className="w-full max-w-sm px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none"
+              />
+              <button
+                onClick={handleSubmitEmail}
+                disabled={!email}
+                className={`px-6 py-2 rounded-lg text-white ${
+                  email
+                    ? 'bg-primary hover:opacity-90 transition'
+                    : 'bg-gray-600 cursor-not-allowed'
+                }`}
+              >
+                Submit
+              </button>
+            </div>
+          ) : (
+            <div className="sent-message flex items-center justify-center gap-2 mt-4 text-lg text-primary">
+              <span>Results sent</span>
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+          )}
+
+          <div className="mt-6">
             <button
               onClick={resetAssessment}
               className="px-6 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition"
             >
               Retake Assessment
             </button>
-            <Link
-              to="/sessions"
-              className="px-6 py-2 bg-primary text-white rounded-lg hover:opacity-90 transition"
-            >
-              Receive Results
-            </Link>
           </div>
         </div>
       )}
@@ -110,12 +154,13 @@ const Assessment = () => {
   );
 };
 
-const ScaleButton = ({ children, onClick, isSelected }) => (
+const ScaleButton = ({ children, onClick, isSelected, value }) => (
   <button
     className={`scale-button w-full py-3 rounded-lg border ${
       isSelected ? 'border-primary bg-primary/20' : 'border-gray-600'
     } hover:bg-primary/10 transition`}
     onClick={onClick}
+    data-value={value}
   >
     {children}
   </button>
