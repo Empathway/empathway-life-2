@@ -18,7 +18,7 @@ const Index: React.FC = () => {
       <header className="bg-black/60 backdrop-blur-lg shadow-lg border-b border-border">
         <div className="container mx-auto flex justify-between items-center py-6 px-8">
           <a href="/" className="flex items-center gap-3">
-            <img src="/logo.svg" alt="Empathway logo" className="h-10 w-auto drop-shadow-lg" />
+            <img src="/Empathway Logo.png" alt="Empathway logo" className="h-14 w-auto drop-shadow-lg" />
             <span className="text-2xl font-extrabold uppercase text-primary tracking-wide">Empathway</span>
           </a>
           <nav className="space-x-8 uppercase text-base text-muted-foreground font-semibold">
@@ -27,14 +27,7 @@ const Index: React.FC = () => {
             <a href="/expert" className="hover:text-primary transition">Expert</a>
           </nav>
           <div className="flex items-center space-x-6 text-base">
-            <div className="text-right">
-              <div>Call Us <span className="font-bold text-primary">+91 8095195245</span></div>
-              <div>
-                Email: <a href="mailto:empathway.life@gmail.com" className="underline text-blue-400 hover:text-blue-600">
-                  empathway.life@gmail.com
-                </a>
-              </div>
-            </div>
+           
             <a href="/register">
               <Button className="bg-gradient-to-r from-primary to-purple-600 text-white px-6 py-2 rounded-lg shadow-lg hover:scale-105 transition">
                 Get Support
